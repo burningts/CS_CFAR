@@ -1,5 +1,5 @@
 %%
-function u = genFMCW(n,r,signal_SNR)
+function [u1,s] = genFMCW(n,r,signal_SNR)
     %工作信号参数
     f0   = 77e9;                                %工作频率，单位：Hz
     fsamp= 20e6;                               %采样频率，单位：Hz
@@ -31,8 +31,8 @@ function u = genFMCW(n,r,signal_SNR)
 %     title('中频IF信号时域波形');
 %     subplot(1,2,2);
 %     plot(r,20*log10(u1/max(u1)));       %横轴以MHz为单位，纵轴是dB形式
-%     xlim([0,25]);
-%     ylim([-100,10]);
+% %     xlim([0,25]);
+% %     ylim([-100,10]);
 %     title('中频IF信号频谱');
 %     xlabel('Range(m)');
 %     ylabel('Magnitude(dB)');

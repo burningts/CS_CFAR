@@ -2,14 +2,15 @@
 clear; clc;
 m = 256;%观测值个数
 n = 1024;%信号x的长度
-range = [2,5,6];                                     %目标距离,单位：m
+range = [2,5,6,10];                                     %目标距离,单位：m
+% range = 0:500:9000;
 signal_SNR = 20;                            %信号信噪比,单位：dB
 
-x = genFMCW(n,range,signal_SNR);
+[x,s] = genFMCW(n,range,signal_SNR);
 x = x(:);
 Psi = eye(n);%x本身是稀疏的，定义稀疏矩阵为单位阵theta=Psi*x
 Phi = randn(m,n)/sqrt(m);%测量矩阵为高斯矩阵
-A = Phi * Psi;%传感矩阵
+A = Phi * Psi;%传感矩阵 
 y = Phi * x;%得到观测向量y
 
 %% 恢复重构信号x
@@ -26,7 +27,7 @@ S = 4;
     r_n = y;%初始化残差(residual)为y
     L = S;%初始化步长(Size of the finalist in the first stage)
     Stage = 1;%初始化Stage
-    IterMax = 5;
+    IterMax = 10;
     for ii=1:IterMax%最多迭代M次
         %(1)Preliminary Test
         product = A'*r_n;%传感矩阵A各列与残差的内积
@@ -71,12 +72,24 @@ S = 4;
     end
     theta(Pos_theta)=theta_ls1;%恢复出的theta
 
-
+%GLRT
+phat = mle(real(x));     
+% td = sqrt(-2*phat^2*log(0.3));
 %% 绘图
 figure;
 % plot(x_r,'k.-');%绘出x的恢复信号
 % hold on;
 plot(real(x),'r');%绘出原信号x
+% figure;
+% h =  histogram(real(x),'Normalization','pdf');
+% hold on
+% y = 0:1:700;
+% mu = 5;
+% sigma = 35;
+% % f = exp(-(y-mu).^2./(2*sigma^2))./(sigma*sqrt(2*pi));
+% f = y.*exp(-y.^2/(2*sigma^2))/sigma^2;
+% plot(y,f,'LineWidth',1.5)
+% disp(h.NumBins);
 % hold off;
 % legend('Recovery','Original')
 % fprintf('\n恢复残差：');
