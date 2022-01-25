@@ -18,7 +18,7 @@ function [u1,s] = genFMCW(n,r,signal_SNR)
         xs(i,:) = exp(1j*2*pi*(u*tao(i)*ti - 0.5*u*tao(i)^2 + f0*tao(i)));
         s = s + xs(i,:);
     end
-    s = awgn(0.05*s,signal_SNR);
+    s = awgn(0.1*s,signal_SNR);
     fsampu = (0:n/2-1)*(fsamp/n);%取前1024个点
     r = fsampu*3e8/(2*u);
     u = fft(real(s));
