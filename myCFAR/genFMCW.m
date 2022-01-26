@@ -25,11 +25,11 @@ function [u1,s] = genFMCW(n,r,signal_SNR)
     u1 = abs(2*u(1:n/2));
 
     figure, 
-    subplot(1,2,1);
-    plot(real(s));
-    grid on;
-    title('中频IF信号时域波形');
-    subplot(1,2,2);
+%     subplot(1,2,1);
+%     plot(real(s));
+%     grid on;
+%     title('中频IF信号时域波形');
+%     subplot(1,2,2);
     plot(r,20*log10(u1/max(u1)));       %横轴以MHz为单位，纵轴是dB形式
 %     xlim([0,25]);
 %     ylim([-100,10]);

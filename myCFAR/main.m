@@ -16,7 +16,7 @@ y = Phi * x;%得到观测向量y
 %% 恢复重构信号x
 phat = mle(real(x));
 Sigma = phat(1);
-TargetPfa = 0.01;
+TargetPfa = 1e-8;
 StepSize = 3;
 [ TargetPos,TargetVal,Ta,Pfa,ii] = CS_SAMP(x,y,SenseMartix,StepSize,TargetPfa,Sigma );
 
